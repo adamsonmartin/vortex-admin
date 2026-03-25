@@ -122,14 +122,11 @@
   </div>
 
   <script>
-    // Tailwind script already loaded via CDN
-
     function setActive(el) {
       document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
       el.classList.add('active');
     }
 
-    // Charts
     function createCharts() {
       new Chart(document.getElementById('revenueChart'), {
         type: 'line',
@@ -162,7 +159,6 @@
       });
     }
 
-    // Init
     window.onload = createCharts;
   </script>
 </body>
