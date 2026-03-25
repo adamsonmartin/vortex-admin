@@ -3,28 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise iGaming Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>iGaming Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .dashboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .slot-machine {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .real-time-charts {
+            width: 100%;
+            height: 400px;
+        }
+        .animated-counter {
+            font-size: 2rem;
+            color: #00ff00;
+        }
+    </style>
 </head>
 <body>
-    <header>
+    <div class="dashboard">
         <h1>World-Class Enterprise iGaming Dashboard</h1>
-    </header>
-    <main>
-        <section id="features">
-            <h2>Features</h2>
-            <ul>
-                <li>Glassmorphism</li>
-                <li>Advanced Animations</li>
-                <li>Slot Game Integration</li>
-                <li>Dynamic Paytables</li>
-                <li>Real-Time Data Visualization</li>
-                <li>Professional Production-Ready Code</li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Enterprise iGaming Dashboard</p>
-    </footer>
+        <div class="slot-machine" id="slotMachine">Interactive Slot Machine Demo</div>
+        <div class="real-time-charts">Real-time Charts Section Here</div>
+        <div class="animated-counter" id="counter">Animated Counters Here</div>
+        <div class="dynamic-paytables">Dynamic Paytables Section Here</div>
+    </div>
+    <script>
+        // Advanced animations and interactivity scripts here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Slot machine demo logic
+            const slotMachine = document.getElementById('slotMachine');
+            slotMachine.addEventListener('click', () => {
+                alert('You clicked the slot machine!');
+            });
+
+            // Animated counter logic
+            let count = 0;
+            const counter = document.getElementById('counter');
+            setInterval(() => {
+                count += 1;
+                counter.textContent = count;
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
