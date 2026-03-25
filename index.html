@@ -15,7 +15,14 @@
     }
     .neon-text { text-shadow: 0 0 15px #00ffcc; }
     .sidebar { background: #110033; }
-    .card { background: #1a0033; border: 1px solid #00ffcc; }
+    .card { background: #1a0033; border: 1px solid #00ffcc; transition: all 0.2s; }
+    .card:hover { border-color: #00ff88; transform: translateY(-2px); }
+    .nav-link { transition: all 0.2s; }
+    .nav-link.active {
+      background: #00ffcc;
+      color: #000;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body class="min-h-screen flex">
@@ -27,30 +34,30 @@
       <h1 class="text-2xl font-bold neon-text">VORTEX</h1>
     </div>
 
-    <nav class="flex-1 space-y-2">
-      <a href="#" class="flex items-center gap-3 px-4 py-3 bg-cyan-500/10 text-cyan-400 rounded-lg">
-        <i class="fas fa-tachometer-alt"></i> Dashboard
+    <nav class="flex-1 space-y-1">
+      <a href="#" onclick="setActive(this)" class="nav-link active flex items-center gap-3 px-4 py-3 text-sm">
+        <i class="fas fa-tachometer-alt w-5"></i> Dashboard
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition">
-        <i class="fas fa-users"></i> Players
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
+        <i class="fas fa-users w-5"></i> Players
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition">
-        <i class="fas fa-gamepad"></i> Games
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
+        <i class="fas fa-gamepad w-5"></i> Games
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition">
-        <i class="fas fa-gift"></i> Bonuses
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
+        <i class="fas fa-gift w-5"></i> Bonuses
       </a>
-      <a href="#" class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-lg transition">
-        <i class="fas fa-shield-alt"></i> Responsible Gaming
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
+        <i class="fas fa-shield-alt w-5"></i> Resp. Gaming
       </a>
     </nav>
 
-    <div class="mt-auto pt-8 border-t border-white/10">
+    <div class="mt-auto pt-8 border-t border-white/10 text-xs">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-purple-500 rounded-full flex items-center justify-center text-sm font-bold">MA</div>
-        <div>
-          <div class="text-sm">Martin Adamson</div>
-          <div class="text-xs text-gray-400">Frontend Developer</div>
+        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-sm font-bold">MA</div>
+        <div class="text-left">
+          <div>Martin Adamson</div>
+          <div class="text-gray-400">Frontend Developer</div>
         </div>
       </div>
     </div>
@@ -58,37 +65,63 @@
 
   <!-- Main Content -->
   <div class="flex-1 p-8">
-    <h2 class="text-3xl font-bold mb-8 neon-text">Dashboard Overview</h2>
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-3xl font-bold neon-text">Dashboard Overview</h2>
+      <div class="text-sm text-gray-400">Last updated: just now</div>
+    </div>
 
     <!-- KPI Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
       <div class="card p-6 rounded-2xl">
-        <div class="text-cyan-400 text-sm mb-1">TODAY'S REVENUE</div>
-        <div class="text-4xl font-bold mb-2">124,850 €</div>
+        <div class="text-cyan-400 text-xs mb-1">TODAY'S REVENUE</div>
+        <div class="text-4xl font-bold mb-1">€124,850</div>
         <div class="text-green-400 text-sm">↑ 18.4% from yesterday</div>
       </div>
       <div class="card p-6 rounded-2xl">
-        <div class="text-cyan-400 text-sm mb-1">ACTIVE PLAYERS</div>
-        <div class="text-4xl font-bold mb-2">2,847</div>
-        <div class="text-green-400 text-sm">↑ 142 online now</div>
+        <div class="text-cyan-400 text-xs mb-1">ACTIVE PLAYERS</div>
+        <div class="text-4xl font-bold mb-1">2,847</div>
+        <div class="text-green-400 text-sm">142 online right now</div>
       </div>
       <div class="card p-6 rounded-2xl">
-        <div class="text-cyan-400 text-sm mb-1">AVERAGE RTP</div>
-        <div class="text-4xl font-bold mb-2">94.8%</div>
+        <div class="text-cyan-400 text-xs mb-1">AVERAGE RTP</div>
+        <div class="text-4xl font-bold mb-1">94.8%</div>
         <div class="text-red-400 text-sm">↓ 1.2% this week</div>
       </div>
       <div class="card p-6 rounded-2xl">
-        <div class="text-cyan-400 text-sm mb-1">TOTAL BETS</div>
-        <div class="text-4xl font-bold mb-2">18,942</div>
+        <div class="text-cyan-400 text-xs mb-1">TOTAL BETS TODAY</div>
+        <div class="text-4xl font-bold mb-1">18,942</div>
         <div class="text-green-400 text-sm">↑ 9% from yesterday</div>
       </div>
     </div>
 
-    <div class="text-center text-gray-400 py-20">
-      Siia tuleb edaspidi graafikud, mängijate tabel, jne.<br>
-      Alustame samm-sammult.
+    <!-- Recent Activity -->
+    <div class="card p-6 rounded-2xl">
+      <h3 class="text-lg font-bold mb-4">Recent Activity</h3>
+      <div class="space-y-4 text-sm">
+        <div class="flex justify-between">
+          <div>Player <span class="text-cyan-400">#47821</span> deposited €500</div>
+          <div class="text-gray-400">2 min ago</div>
+        </div>
+        <div class="flex justify-between">
+          <div>New bonus campaign "Welcome50" activated</div>
+          <div class="text-gray-400">17 min ago</div>
+        </div>
+        <div class="flex justify-between">
+          <div>Game "Neon Heist" reached 94.2% RTP today</div>
+          <div class="text-gray-400">41 min ago</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  function setActive(el) {
+    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Tailwind script already included via CDN
+</script>
 </body>
 </html>
