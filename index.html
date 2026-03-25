@@ -3,62 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VORTEX - Enterprise Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+    <title>VORTEX - Next-Gen Analytics Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
         * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-tertiary: #f1f5f9;
-            --text-primary: #0f172a;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #8b5cf6;
-            --accent-blue: #3b82f6;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-        }
-        
-        html, body {
-            background: linear-gradient(135deg, #f0f4f8 0%, #e0e7ff 100%);
-            color: var(--text-primary);
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a1a1a;
             min-height: 100vh;
         }
-        
-        /* Smooth transitions */
-        * {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* Animated Background */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
         }
-        
-        button, a {
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo i {
+            font-size: 32px;
+        }
+
+        .nav-menu {
+            flex: 1;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: #666;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 500;
             position: relative;
         }
-        
-        /* Button animations */
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            transition: height 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            color: #667eea;
+        }
+
+        .nav-link.active::before {
+            height: 24px;
+        }
+
+        .nav-link i {
+            font-size: 20px;
+            width: 24px;
+        }
+
+        .sidebar-footer {
+            padding-top: 20px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            color: white;
+        }
+
+        .user-info {
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .user-info p:first-child {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .user-info p:last-child {
+            color: #999;
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            background: white;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         .btn {
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
             border: none;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
+            position: relative;
             overflow: hidden;
         }
-        
+
         .btn::before {
             content: '';
             position: absolute;
@@ -66,592 +258,912 @@
             left: 50%;
             width: 0;
             height: 0;
-            border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
             transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
-        
-        .btn:hover::before {
+
+        .btn:active::before {
             width: 300px;
             height: 300px;
         }
-        
+
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
-        
+
         .btn-primary:hover {
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
             transform: translateY(-2px);
         }
-        
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+
+        /* CONTENT */
+        .content {
+            padding: 40px;
         }
-        
-        .btn-secondary:hover {
-            background: var(--bg-secondary);
-            border-color: var(--accent-cyan);
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border-right: 1px solid var(--border-color);
-            height: 100vh;
-            position: sticky;
-            top: 0;
-        }
-        
-        .nav-link {
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #1a1a1a;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-left: 3px solid transparent;
-            font-weight: 500;
-            cursor: pointer;
+            gap: 10px;
         }
-        
-        .nav-link:hover {
-            background: var(--bg-secondary);
-            color: var(--accent-cyan);
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
         }
-        
-        .nav-link.active {
-            background: rgba(6, 182, 212, 0.1);
-            color: var(--accent-cyan);
-            border-left-color: var(--accent-cyan);
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
         }
-        
-        .nav-link i {
-            font-size: 18px;
-            width: 24px;
-        }
-        
-        /* Cards */
+
         .card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-color: var(--accent-cyan);
-            transform: translateY(-2px);
-        }
-        
-        /* KPI Cards */
-        .kpi-card {
             position: relative;
             overflow: hidden;
         }
-        
-        .kpi-card::after {
+
+        .card::before {
             content: '';
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, var(--accent-cyan) 0%, transparent 70%);
-            opacity: 0.05;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
             border-radius: 50%;
+            transition: all 0.6s ease;
         }
-        
-        .kpi-label {
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .card:hover::before {
+            top: -30%;
+            right: -30%;
+        }
+
+        .card-label {
             font-size: 12px;
-            color: var(--text-secondary);
+            color: #999;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             font-weight: 600;
         }
-        
-        .kpi-value {
-            font-size: 32px;
+
+        .card-value {
+            font-size: 42px;
             font-weight: 800;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
         }
-        
-        .kpi-change {
-            display: inline-flex;
+
+        .card-change {
+            display: flex;
             align-items: center;
             gap: 4px;
             font-size: 13px;
             font-weight: 600;
         }
-        
-        .kpi-change.positive {
-            color: var(--success);
+
+        .change-positive {
+            color: #2e7d32;
         }
-        
-        .kpi-change.negative {
-            color: var(--danger);
+
+        .change-negative {
+            color: #c62828;
         }
-        
-        /* Header */
-        .header {
+
+        .chart-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
             background: white;
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px 32px;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .chart-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
         }
-        
-        .header h1 {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .status-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        
-        .status-indicator::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        /* Content grid */
-        .content {
-            padding: 32px;
-            gap: 24px;
-            display: grid;
-            grid-template-columns: 1fr;
-        }
-        
-        .section {
-            display: grid;
-            gap: 16px;
-        }
-        
-        .section-title {
-            font-size: 18px;
+
+        .chart-title {
+            font-size: 16px;
             font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+            color: #1a1a1a;
         }
-        
-        /* Charts */
+
         .chart-container {
             position: relative;
             height: 300px;
         }
-        
-        /* Activity Feed */
-        .activity-item {
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
         }
-        
-        .activity-item:last-child {
-            border-bottom: none;
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-        
-        .activity-text {
-            font-size: 14px;
-            color: var(--text-primary);
+
+        .notification-success {
+            border-left: 4px solid #2e7d32;
         }
-        
-        .activity-time {
-            font-size: 12px;
-            color: var(--text-secondary);
-            white-space: nowrap;
+
+        .notification-info {
+            border-left: 4px solid #667eea;
         }
-        
-        /* Modal */
+
+        .notification-icon {
+            font-size: 20px;
+        }
+
+        .notification-success .notification-icon {
+            color: #2e7d32;
+        }
+
+        .notification-info .notification-icon {
+            color: #667eea;
+        }
+
+        /* MODAL */
         .modal {
             display: none;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
-            animation: fadeIn 0.3s ease;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+
         .modal-content {
             background: white;
-            margin: 10% auto;
+            border-radius: 16px;
             padding: 32px;
-            border-radius: 12px;
             width: 90%;
-            max-width: 500px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
-        
+
         @keyframes slideUp {
-            from { transform: translateY(40px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
-        
-        .modal.show {
-            display: block;
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0f0f0;
         }
-        
-        .close {
-            color: var(--text-secondary);
-            float: right;
-            font-size: 24px;
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
             cursor: pointer;
-            font-weight: 300;
+            color: #999;
+            transition: all 0.3s ease;
         }
-        
-        .close:hover {
-            color: var(--text-primary);
+
+        .modal-close:hover {
+            color: #1a1a1a;
+            transform: rotate(90deg);
         }
-        
-        /* Responsive */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e5e5;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .activity-section {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .activity-card {
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateX(4px);
+            border-left-color: #764ba2;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 6px;
+        }
+
+        .activity-text {
+            font-size: 14px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        /* RESPONSIVE */
         @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .main {
+                height: calc(100vh - 200px);
+            }
+
             .header {
                 flex-direction: column;
-                gap: 16px;
                 align-items: flex-start;
+                gap: 16px;
             }
-            
-            .sidebar {
-                position: fixed;
-                left: -250px;
-                width: 250px;
-                height: 100vh;
-                z-index: 50;
-                transition: left 0.3s ease;
+
+            .cards-grid {
+                grid-template-columns: 1fr;
             }
-            
-            .sidebar.open {
-                left: 0;
-            }
-            
-            .content {
-                padding: 16px;
+
+            .chart-section {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="sidebar w-64 overflow-y-auto">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-chart-line text-white font-bold text-lg"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold text-gray-900">VORTEX</p>
-                        <p class="text-xs text-gray-500">Dashboard</p>
-                    </div>
-                </div>
+    <!-- Animated Background -->
+    <div class="bg-particles" id="particles"></div>
+
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="ri-rocket-2-line"></i>
+                VORTEX
             </div>
-            
-            <nav class="p-4 space-y-1">
-                <a href="#" onclick="setActive(event, 'dashboard')" class="nav-link active">
-                    <i class="fas fa-home"></i>
-                    <span>Overview</span>
-                </a>
-                <a href="#" onclick="setActive(event, 'players')" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>Players</span>
-                </a>
-                <a href="#" onclick="setActive(event, 'games')" class="nav-link">
-                    <i class="fas fa-gamepad"></i>
-                    <span>Games</span>
-                </a>
-                <a href="#" onclick="setActive(event, 'bonuses')" class="nav-link">
-                    <i class="fas fa-gift"></i>
-                    <span>Bonuses</span>
-                </a>
-                <a href="#" onclick="setActive(event, 'analytics')" class="nav-link">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Analytics</span>
-                </a>
-                <a href="#" onclick="setActive(event, 'responsible')" class="nav-link">
-                    <i class="fas fa-shield-heart"></i>
-                    <span>Responsible Gaming</span>
-                </a>
-            </nav>
-            
-            <div class="p-4 mt-auto border-t border-gray-200">
-                <div class="card !p-3">
-                    <div class="flex items-center gap-2 mb-2">
-                        <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">MA</div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-900">Martin A.</p>
-                            <p class="text-xs text-gray-500">Developer</p>
-                        </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" onclick="setNav(event)">
+                        <i class="ri-home-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="setNav(event)">
+                        <i class="ri-user-line"></i>
+                        <span>Players</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="setNav(event)">
+                        <i class="ri-game-2-line"></i>
+                        <span>Games</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="setNav(event)">
+                        <i class="ri-gift-line"></i>
+                        <span>Bonuses</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="setNav(event)">
+                        <i class="ri-bar-chart-2-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="setNav(event)">
+                        <i class="ri-shield-heart-line"></i>
+                        <span>Responsible Gaming</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-card" onclick="showModal('profile')">
+                    <div class="avatar">MA</div>
+                    <div class="user-info">
+                        <p>Martin Adamson</p>
+                        <p>Frontend Developer</p>
                     </div>
                 </div>
             </div>
         </aside>
-        
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <!-- Header -->
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+            <!-- HEADER -->
             <div class="header">
                 <div>
-                    <h1>Dashboard</h1>
-                    <p class="text-sm text-gray-500 mt-1">Welcome back, Martin 👋</p>
+                    <h1>Analytics Dashboard</h1>
+                    <p style="margin-top: 4px; opacity: 0.9;">Real-time business intelligence & metrics</p>
                 </div>
                 <div class="header-right">
-                    <div class="status-indicator">Online</div>
-                    <button class="btn btn-primary" onclick="showModal('refresh')">
-                        <i class="fas fa-sync-alt"></i> Refresh
+                    <div class="status">
+                        <div class="status-dot"></div>
+                        System Online
+                    </div>
+                    <button class="btn btn-primary" onclick="refreshData()">
+                        <i class="ri-refresh-line"></i>
+                        Refresh
                     </button>
                 </div>
             </div>
-            
-            <!-- Content -->
+
+            <!-- CONTENT -->
             <div class="content">
-                <!-- KPI Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="card kpi-card">
-                        <div class="kpi-label">Today's Revenue</div>
-                        <div class="kpi-value">€124,850</div>
-                        <div class="kpi-change positive">
-                            <i class="fas fa-arrow-up"></i> 18.4% vs yesterday
+                <!-- KPI CARDS -->
+                <div class="section-title">Key Performance Indicators</div>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-label">Today's Revenue</div>
+                        <div class="card-value" data-target="124850">€0</div>
+                        <div class="card-change change-positive">
+                            <i class="ri-arrow-up-line"></i>
+                            18.4% vs yesterday
                         </div>
                     </div>
-                    
-                    <div class="card kpi-card">
-                        <div class="kpi-label">Active Players</div>
-                        <div class="kpi-value">2,847</div>
-                        <div class="kpi-change positive">
-                            <i class="fas fa-arrow-up"></i> 142 online now
+
+                    <div class="card">
+                        <div class="card-label">Active Players</div>
+                        <div class="card-value" data-target="2847">0</div>
+                        <div class="card-change change-positive">
+                            <i class="ri-arrow-up-line"></i>
+                            142 online now
                         </div>
                     </div>
-                    
-                    <div class="card kpi-card">
-                        <div class="kpi-label">Average RTP</div>
-                        <div class="kpi-value">94.8%</div>
-                        <div class="kpi-change negative">
-                            <i class="fas fa-arrow-down"></i> 1.2% this week
+
+                    <div class="card">
+                        <div class="card-label">Average RTP</div>
+                        <div class="card-value" data-target="948" data-decimals="1">0%</div>
+                        <div class="card-change change-negative">
+                            <i class="ri-arrow-down-line"></i>
+                            1.2% this week
                         </div>
                     </div>
-                    
-                    <div class="card kpi-card">
-                        <div class="kpi-label">Total Bets</div>
-                        <div class="kpi-value">18,942</div>
-                        <div class="kpi-change positive">
-                            <i class="fas fa-arrow-up"></i> 9% vs yesterday
+
+                    <div class="card">
+                        <div class="card-label">Total Bets</div>
+                        <div class="card-value" data-target="18942">0</div>
+                        <div class="card-change change-positive">
+                            <i class="ri-arrow-up-line"></i>
+                            9% vs yesterday
                         </div>
                     </div>
                 </div>
-                
-                <!-- Charts -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="card section">
-                        <div class="section-title">Revenue Trend</div>
+
+                <!-- CHARTS -->
+                <div class="section-title">Real-Time Analytics</div>
+                <div class="chart-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title">Revenue Trend</div>
+                            <button class="btn btn-secondary" onclick="showModal('chart1')">
+                                <i class="ri-expand-right-2-line"></i> Expand
+                            </button>
+                        </div>
                         <div class="chart-container">
                             <canvas id="revenueChart"></canvas>
                         </div>
                     </div>
-                    
-                    <div class="card section">
-                        <div class="section-title">Active Players</div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title">Player Activity</div>
+                            <button class="btn btn-secondary" onclick="showModal('chart2')">
+                                <i class="ri-expand-right-2-line"></i> Expand
+                            </button>
+                        </div>
                         <div class="chart-container">
                             <canvas id="playersChart"></canvas>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Recent Activity -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 card section">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="section-title">Recent Activity</div>
-                            <button class="btn btn-secondary" onclick="showModal('activity')">
-                                <i class="fas fa-arrow-right"></i> View All
-                            </button>
-                        </div>
-                        <div id="activityFeed">
-                            <div class="activity-item">
-                                <div class="activity-text"><span class="font-semibold text-cyan-600">#47821</span> deposited €500</div>
-                                <div class="activity-time">2 min ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-text">Campaign <span class="font-semibold">"Welcome50"</span> activated</div>
-                                <div class="activity-time">17 min ago</div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-text">Game <span class="font-semibold">"Neon Heist"</span> reached 94.2% RTP</div>
-                                <div class="activity-time">41 min ago</div>
-                            </div>
+
+                <!-- ACTIVITY -->
+                <div class="section-title">Real-Time Activity</div>
+                <div class="activity-section">
+                    <div class="activity-card">
+                        <div class="activity-time">2 minutes ago</div>
+                        <div class="activity-text">
+                            Player <strong>#47821</strong> deposited <strong>€500</strong> - Welcome bonus applied
                         </div>
                     </div>
-                    
-                    <div class="card section">
-                        <div class="section-title">Quick Actions</div>
-                        <button class="btn btn-primary w-full mb-3" onclick="showModal('players')">
-                            <i class="fas fa-user-plus"></i> Add Player
-                        </button>
-                        <button class="btn btn-secondary w-full mb-3" onclick="showModal('game')">
-                            <i class="fas fa-plus"></i> Add Game
-                        </button>
-                        <button class="btn btn-secondary w-full" onclick="showModal('settings')">
-                            <i class="fas fa-cog"></i> Settings
+                    <div class="activity-card">
+                        <div class="activity-time">17 minutes ago</div>
+                        <div class="activity-text">
+                            Campaign <strong>"Welcome50"</strong> activated for <strong>2,847 players</strong>
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-time">41 minutes ago</div>
+                        <div class="activity-text">
+                            Game <strong>"Neon Heist"</strong> reached <strong>94.2% RTP</strong> - Performance peak
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-time">1 hour ago</div>
+                        <div class="activity-text">
+                            New player registration spike detected - <strong>+15%</strong> increase
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-time">2 hours ago</div>
+                        <div class="activity-text">
+                            System backup completed - All data <strong>secure & synced</strong>
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-time">Interested in working together?</div>
+                        <button class="btn btn-primary" style="margin-top: 12px; width: 100%;" onclick="showModal('contact')">
+                            <i class="ri-mail-line"></i> Get in Touch
                         </button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    
-    <!-- Modals -->
-    <div id="modal" class="modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 class="text-2xl font-bold mb-4" id="modalTitle">Modal</h2>
-            <p id="modalBody">Loading...</p>
-            <div class="mt-6 flex gap-3 justify-end">
-                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="handleModalAction()">Confirm</button>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Modal Title</div>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="ri-close-line"></i>
+                </button>
             </div>
+            <div id="modalBody"></div>
         </div>
     </div>
-    
+
+    <!-- NOTIFICATIONS -->
+    <div id="notifications"></div>
+
     <script>
+        // Generate particles
+        function generateParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.delay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 20) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const decimals = parseInt(counter.dataset.decimals) || 0;
+                let current = 0;
+                const increment = target / 50;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (decimals > 0) {
+                            counter.textContent = current.toFixed(1) + (counter.dataset.decimals ? '%' : '');
+                        } else {
+                            counter.textContent = (counter.dataset.decimals ? (current/100).toFixed(1) + '%' : '€' + Math.round(current).toLocaleString());
+                        }
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        if (decimals > 0) {
+                            counter.textContent = (target/100).toFixed(1) + '%';
+                        } else {
+                            counter.textContent = (counter.textContent.includes('€') ? '€' : '') + target.toLocaleString();
+                        }
+                    }
+                };
+                updateCounter();
+            });
+        }
+
         // Navigation
-        function setActive(e, section) {
+        function setNav(e) {
             e.preventDefault();
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             e.target.closest('.nav-link').classList.add('active');
+            notify('success', '✓ Navigation updated');
         }
-        
+
         // Modal functions
-        function showModal(action) {
+        function showModal(type) {
             const modal = document.getElementById('modal');
             const title = document.getElementById('modalTitle');
             const body = document.getElementById('modalBody');
-            
-            const content = {
-                refresh: { title: 'Refresh Data', body: 'Refreshing dashboard data...' },
-                activity: { title: 'All Activities', body: 'Showing all recent activities from the past 24 hours.' },
-                players: { title: 'Add New Player', body: 'Enter player details to add a new player to the system.' },
-                game: { title: 'Add New Game', body: 'Configure and add a new game to your platform.' },
-                settings: { title: 'Settings', body: 'Manage your dashboard preferences and settings.' }
+
+            const modals = {
+                profile: {
+                    title: 'User Profile',
+                    content: `
+                        <p style="margin-bottom: 20px; color: #666;">
+                            Martin Adamson - Frontend Developer with expertise in modern web technologies and iGaming platforms.
+                        </p>
+                        <button class="btn btn-primary" onclick="notify('success', '✓ Profile saved')">Save Changes</button>
+                    `
+                },
+                chart1: {
+                    title: 'Revenue Trend - Detailed View',
+                    content: `
+                        <p style="margin-bottom: 20px; color: #666;">
+                            7-day revenue analysis showing consistent growth. Peak performance on Sunday with €124,850 in revenue.
+                        </p>
+                        <div style="height: 400px;">
+                            <canvas id="chartExpand1"></canvas>
+                        </div>
+                    `
+                },
+                chart2: {
+                    title: 'Player Activity - Detailed View',
+                    content: `
+                        <p style="margin-bottom: 20px; color: #666;">
+                            Active player count over the last 7 days with peak engagement during weekends.
+                        </p>
+                        <div style="height: 400px;">
+                            <canvas id="chartExpand2"></canvas>
+                        </div>
+                    `
+                },
+                contact: {
+                    title: '💼 Let\'s Work Together',
+                    content: `
+                        <p style="margin-bottom: 24px; color: #666; font-size: 15px;">
+                            I'm Martin Adamson, a frontend developer specializing in modern, high-performance dashboards for the iGaming industry. 
+                            This VORTEX dashboard showcases my expertise in creating beautiful, functional, and scalable interfaces. 
+                            <strong>I'd love to discuss how I can contribute to your team!</strong>
+                        </p>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-input" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Company Email</label>
+                                <input type="email" class="form-input" placeholder="contact@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-input" placeholder="Your Company" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="ri-mail-send-line"></i> Send Message
+                                </button>
+                            </div>
+                        </form>
+                    `
+                }
             };
-            
-            title.textContent = content[action]?.title || 'Modal';
-            body.textContent = content[action]?.body || 'Content loading...';
+
+            const modal_content = modals[type] || { title: 'Modal', content: 'Content' };
+            title.textContent = modal_content.title;
+            body.innerHTML = modal_content.content;
+
             modal.classList.add('show');
+
+            if (type === 'chart1') {
+                setTimeout(() => createChartExpanded('chartExpand1', 'revenue'), 100);
+            } else if (type === 'chart2') {
+                setTimeout(() => createChartExpanded('chartExpand2', 'players'), 100);
+            }
+
+            if (type === 'contact') {
+                document.getElementById('contactForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    notify('success', '✓ Message sent! We\'ll be in touch soon!');
+                    closeModal();
+                });
+            }
         }
-        
-        function closeModal(e) {
-            if (e && e.target.id !== 'modal') return;
+
+        function closeModal() {
             document.getElementById('modal').classList.remove('show');
         }
-        
-        function handleModalAction() {
-            alert('Action confirmed!');
-            closeModal();
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'modal') closeModal();
         }
-        
+
+        // Notifications
+        function notify(type, message) {
+            const container = document.getElementById('notifications');
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="ri-check-line notification-icon"></i>
+                <div>${message}</div>
+            `;
+            container.appendChild(notification);
+            setTimeout(() => notification.remove(), 4000);
+        }
+
+        // Refresh data
+        function refreshData() {
+            notify('info', '⟳ Refreshing dashboard data...');
+            setTimeout(() => {
+                notify('success', '✓ Data refreshed successfully');
+            }, 1500);
+        }
+
         // Initialize Charts
-        const chartDefaults = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-                y: { grid: { color: 'rgba(0, 0, 0, 0.03)' }, ticks: { color: '#64748b' } },
-                x: { grid: { display: false }, ticks: { color: '#64748b' } }
+        function initCharts() {
+            const chartConfig = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: '#999' } },
+                    x: { grid: { display: false }, ticks: { color: '#999' } }
+                }
+            };
+
+            new Chart(document.getElementById('revenueChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [82000, 95000, 68000, 112000, 134000, 98000, 124850],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: chartConfig
+            });
+
+            new Chart(document.getElementById('playersChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Players',
+                        data: [1840, 2210, 1980, 2540, 3120, 2780, 2847],
+                        borderColor: '#764ba2',
+                        backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#764ba2',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: chartConfig
+            });
+        }
+
+        function createChartExpanded(id, type) {
+            const ctx = document.getElementById(id);
+            if (!ctx) return;
+
+            const chartConfig = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { color: '#999' } },
+                    x: { grid: { display: false }, ticks: { color: '#999' } }
+                }
+            };
+
+            if (type === 'revenue') {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Revenue €',
+                            data: [82000, 95000, 68000, 112000, 134000, 98000, 124850],
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#667eea'
+                        }]
+                    },
+                    options: chartConfig
+                });
+            } else {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Active Players',
+                            data: [1840, 2210, 1980, 2540, 3120, 2780, 2847],
+                            borderColor: '#764ba2',
+                            backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#764ba2'
+                        }]
+                    },
+                    options: chartConfig
+                });
             }
-        };
-        
-        new Chart(document.getElementById('revenueChart'), {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'Revenue',
-                    data: [82000, 95000, 68000, 112000, 134000, 98000, 124850],
-                    borderColor: '#06b6d4',
-                    backgroundColor: 'rgba(6, 182, 212, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#06b6d4',
-                    pointBorderColor: '#fff'
-                }]
-            },
-            options: chartDefaults
-        });
-        
-        new Chart(document.getElementById('playersChart'), {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'Players',
-                    data: [1840, 2210, 1980, 2540, 3120, 2780, 2847],
-                    borderColor: '#8b5cf6',
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#8b5cf6',
-                    pointBorderColor: '#fff'
-                }]
-            },
-            options: chartDefaults
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            generateParticles();
+            initCharts();
+            animateCounters();
+            notify('success', '✓ Dashboard loaded successfully');
         });
     </script>
 </body>
