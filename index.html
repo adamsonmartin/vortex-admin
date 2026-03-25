@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VORTEX ADMIN - iGaming Operator Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -13,16 +14,10 @@
       background: #0a001f;
       color: #e0e0ff;
     }
-    .neon-text { text-shadow: 0 0 15px #00ffcc; }
+    .neon-text { text-shadow: 0 0 20px #00ffcc; }
     .sidebar { background: #110033; }
-    .card { background: #1a0033; border: 1px solid #00ffcc; transition: all 0.2s; }
-    .card:hover { border-color: #00ff88; transform: translateY(-2px); }
-    .nav-link { transition: all 0.2s; }
-    .nav-link.active {
-      background: #00ffcc;
-      color: #000;
-      border-radius: 8px;
-    }
+    .card { background: #1a0033; border: 1px solid #00ffcc; }
+    .nav-link.active { background: #00ffcc; color: #000; border-radius: 8px; }
   </style>
 </head>
 <body class="min-h-screen flex">
@@ -30,34 +25,34 @@
   <!-- Sidebar -->
   <div class="w-64 sidebar min-h-screen p-6 flex flex-col">
     <div class="flex items-center gap-3 mb-12">
-      <div class="w-10 h-10 bg-cyan-400 rounded flex items-center justify-center text-black font-bold text-2xl">V</div>
-      <h1 class="text-2xl font-bold neon-text">VORTEX</h1>
+      <div class="w-10 h-10 bg-cyan-400 rounded flex items-center justify-center text-black font-bold text-3xl">V</div>
+      <h1 class="text-3xl font-bold neon-text">VORTEX</h1>
     </div>
 
-    <nav class="flex-1 space-y-1">
-      <a href="#" onclick="setActive(this)" class="nav-link active flex items-center gap-3 px-4 py-3 text-sm">
-        <i class="fas fa-tachometer-alt w-5"></i> Dashboard
+    <nav class="flex-1 space-y-1 text-sm">
+      <a href="#" onclick="setActive(this)" class="nav-link active flex items-center gap-3 px-4 py-3">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
       </a>
-      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
-        <i class="fas fa-users w-5"></i> Players
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 hover:bg-white/10">
+        <i class="fas fa-users"></i> Players
       </a>
-      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
-        <i class="fas fa-gamepad w-5"></i> Games
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 hover:bg-white/10">
+        <i class="fas fa-gamepad"></i> Games
       </a>
-      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
-        <i class="fas fa-gift w-5"></i> Bonuses
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 hover:bg-white/10">
+        <i class="fas fa-gift"></i> Bonuses
       </a>
-      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 text-sm hover:bg-white/10">
-        <i class="fas fa-shield-alt w-5"></i> Resp. Gaming
+      <a href="#" onclick="setActive(this)" class="nav-link flex items-center gap-3 px-4 py-3 hover:bg-white/10">
+        <i class="fas fa-shield-alt"></i> Responsible Gaming
       </a>
     </nav>
 
-    <div class="mt-auto pt-8 border-t border-white/10 text-xs">
+    <div class="mt-auto pt-8 border-t border-white/10">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-sm font-bold">MA</div>
-        <div class="text-left">
-          <div>Martin Adamson</div>
-          <div class="text-gray-400">Frontend Developer</div>
+        <div class="w-9 h-9 bg-purple-500 rounded-full flex items-center justify-center text-sm font-bold">MA</div>
+        <div class="text-left text-sm">
+          Martin Adamson<br>
+          <span class="text-xs text-gray-400">Frontend Developer</span>
         </div>
       </div>
     </div>
@@ -74,35 +69,47 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
       <div class="card p-6 rounded-2xl">
         <div class="text-cyan-400 text-xs mb-1">TODAY'S REVENUE</div>
-        <div class="text-4xl font-bold mb-1">€124,850</div>
-        <div class="text-green-400 text-sm">↑ 18.4% from yesterday</div>
+        <div class="text-4xl font-bold">€ 124,850</div>
+        <div class="text-green-400 text-sm mt-2">↑ 18.4% from yesterday</div>
       </div>
       <div class="card p-6 rounded-2xl">
         <div class="text-cyan-400 text-xs mb-1">ACTIVE PLAYERS</div>
-        <div class="text-4xl font-bold mb-1">2,847</div>
-        <div class="text-green-400 text-sm">142 online right now</div>
+        <div class="text-4xl font-bold">2,847</div>
+        <div class="text-green-400 text-sm mt-2">142 online right now</div>
       </div>
       <div class="card p-6 rounded-2xl">
         <div class="text-cyan-400 text-xs mb-1">AVERAGE RTP</div>
-        <div class="text-4xl font-bold mb-1">94.8%</div>
-        <div class="text-red-400 text-sm">↓ 1.2% this week</div>
+        <div class="text-4xl font-bold">94.8%</div>
+        <div class="text-red-400 text-sm mt-2">↓ 1.2% this week</div>
       </div>
       <div class="card p-6 rounded-2xl">
         <div class="text-cyan-400 text-xs mb-1">TOTAL BETS TODAY</div>
-        <div class="text-4xl font-bold mb-1">18,942</div>
-        <div class="text-green-400 text-sm">↑ 9% from yesterday</div>
+        <div class="text-4xl font-bold">18,942</div>
+        <div class="text-green-400 text-sm mt-2">↑ 9% from yesterday</div>
+      </div>
+    </div>
+
+    <!-- Charts row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card p-6 rounded-2xl">
+        <h3 class="text-lg mb-4">Revenue Trend (Last 7 days)</h3>
+        <canvas id="revenueChart" height="120"></canvas>
+      </div>
+      <div class="card p-6 rounded-2xl">
+        <h3 class="text-lg mb-4">Active Players Trend</h3>
+        <canvas id="playersChart" height="120"></canvas>
       </div>
     </div>
 
     <!-- Recent Activity -->
-    <div class="card p-6 rounded-2xl">
-      <h3 class="text-lg font-bold mb-4">Recent Activity</h3>
+    <div class="card p-6 rounded-2xl mt-8">
+      <h3 class="text-lg mb-4">Recent Activity</h3>
       <div class="space-y-4 text-sm">
-        <div class="flex justify-between">
+        <div class="flex justify-between border-b border-white/10 pb-3">
           <div>Player <span class="text-cyan-400">#47821</span> deposited €500</div>
           <div class="text-gray-400">2 min ago</div>
         </div>
-        <div class="flex justify-between">
+        <div class="flex justify-between border-b border-white/10 pb-3">
           <div>New bonus campaign "Welcome50" activated</div>
           <div class="text-gray-400">17 min ago</div>
         </div>
@@ -113,15 +120,50 @@
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  function setActive(el) {
-    document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-    el.classList.add('active');
-  }
+  <script>
+    // Tailwind script already loaded via CDN
 
-  // Tailwind script already included via CDN
-</script>
+    function setActive(el) {
+      document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // Charts
+    function createCharts() {
+      new Chart(document.getElementById('revenueChart'), {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Revenue €',
+            data: [82000, 95000, 68000, 112000, 134000, 98000, 124850],
+            borderColor: '#00ffcc',
+            tension: 0.4,
+            borderWidth: 3
+          }]
+        },
+        options: { plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#ffffff10' } } } }
+      });
+
+      new Chart(document.getElementById('playersChart'), {
+        type: 'line',
+        data: {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          datasets: [{
+            label: 'Active Players',
+            data: [1840, 2210, 1980, 2540, 3120, 2780, 2847],
+            borderColor: '#ffff00',
+            tension: 0.4,
+            borderWidth: 3
+          }]
+        },
+        options: { plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#ffffff10' } } } }
+      });
+    }
+
+    // Init
+    window.onload = createCharts;
+  </script>
 </body>
 </html>
